@@ -1,22 +1,24 @@
 const app = require("express")();
 const server = require("http").createServer(app);
-const cors = require("cors");
+const cors = require("cors"); 
 
+// This is the modified part for Socket.IO
 const io = require("socket.io")(server, {
 	cors: {
-		origin: "*",
+		origin: "*", // Allows connections from any website
 		methods: [ "GET", "POST" ]
 	}
 });
 
-app.use(cors());
+app.use(cors()); 
 
 const PORT = process.env.PORT || 5000;
 
 app.get('/', (req, res) => {
-	res.send('Running');
+	res.send('Server is running.');
 });
 
+// Your existing socket connection logic stays here
 io.on("connection", (socket) => {
 	socket.emit("me", socket.id);
 
